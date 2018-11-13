@@ -32,7 +32,7 @@ class SentimentReponse:
 def analyze():
     text: "" = request.args.get('text')
     feature_set = generate_features_from_text(tokenizer, text)
-    prediction = model.predict(feature_set)
+    prediction = model.predict(feature_set, True)
 
     response = SentimentReponse(prediction[0][1], prediction)
 
