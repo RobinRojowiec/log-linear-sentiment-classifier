@@ -1,0 +1,17 @@
+version: '3.3'
+services:
+  sentiment_webapp:
+    image: robinr/linear_senti_classifier
+    ports:
+      - "3445:3445"
+    environment:
+      - PORT=3445
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 150M
+        reservations:
+          cpus: '0.25'
+          memory: 120M
+      replicas: 2
