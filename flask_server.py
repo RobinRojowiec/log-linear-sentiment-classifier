@@ -1,7 +1,7 @@
 import os
 import pickle
-import jsonpickle
 
+import jsonpickle
 from flask import Flask, request
 
 from feature_set import generate_features_from_text
@@ -24,8 +24,7 @@ class SentimentResponse:
         self.detailed_probabilities = {}
 
         for prediction in predictions:
-            formatted_value = "{0:.2f}%".format(float(prediction[0])*100.0)
-            self.detailed_probabilities[prediction[1]] = formatted_value
+            self.detailed_probabilities[prediction[1]] = float(prediction[0])
 
         if float(predictions[0][0]) == float(predictions[1][0]):
             self.predicted_class = "neutral"

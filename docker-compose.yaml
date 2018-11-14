@@ -3,7 +3,7 @@ services:
   sentiment_webapp:
     image: robinr/linear_senti_classifier
     ports:
-      - "3445:3445"
+    - "3445"
     environment:
       - PORT=3445
     deploy:
