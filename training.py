@@ -18,8 +18,8 @@ else:
     regularization = 0.001
 
 # define paths for training and dev data
-paths_training = [["data/training/pos", "pos"], ["data/training/neg", "neg"]]
-paths_dev = [["data/dev/pos", "pos"], ["data/dev/neg", "neg"]]
+paths_training = [["data/training/pos", "positive"], ["data/training/neg", "negative"]]
+paths_dev = [["data/dev/pos", "positive"], ["data/dev/neg", "negative"]]
 
 print("Starting training")
 
@@ -28,7 +28,7 @@ feature_sets_training = generate_feature_sets(paths_training, "feature_sets_trai
 feature_sets_dev = generate_feature_sets(paths_dev, "feature_sets_dev")
 
 # training the model (auto here means the trainings stops when a specific gradient threshold has been exceeded)
-model = LogLinearModel(["pos", "neg"])
+model = LogLinearModel(["positive", "negative"])
 model.auto_train(feature_sets_training, feature_sets_dev, learning_rate, regularization, True)
 
 print("Finished!")

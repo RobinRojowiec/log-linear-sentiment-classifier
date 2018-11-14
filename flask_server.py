@@ -19,22 +19,28 @@ app = Flask(__name__)
 
 
 # response class
-class SentimentReponse:
-    def __init__(self, best_class, predictions):
-        self.predicted_class = best_class
+class SentimentResponse:
+    def __init__(self, predictions):
         self.detailed_probabilities = {}
 
         for prediction in predictions:
-            self.detailed_probabilities[prediction[1]] = float(prediction[0])
+            formatted_value = "{0:.2f}%".format(float(prediction[0])*100.0)
+            self.detailed_probabilities[prediction[1]] = formatted_value
+
+        if float(predictions[0][0]) == float(predictions[1][0]):
+            self.predicted_class = "neutral"
+        else:
+            self.predicted_class = predictions[0][1]
 
 
 @app.route('/analyze')
 def analyze():
     text: "" = request.args.get('text')
     feature_set = generate_features_from_text(tokenizer, text)
+    print(feature_set.features)
     prediction = model.predict(feature_set, True)
 
-    response = SentimentReponse(prediction[0][1], prediction)
+    response = SentimentResponse(prediction)
 
     return jsonpickle.encode(response, unpicklable=False)
 

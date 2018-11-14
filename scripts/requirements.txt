@@ -1,3 +1,4 @@
 Flask==1.0.2
 jsonpickle==1.0
 numpy==1.15.4
+nltk==3.3

@@ -16,7 +16,7 @@ class LogLinearModel:
 
     def auto_train(self, feature_sets_training, feature_sets_dev, learning_rate=0.1, regularization=0.001,
                    use_log_freq=False,
-                   gradient_descent_threshold=0.1):
+                   gradient_descent_threshold=0.5):
         """ trains the model automatically, meaning no iteration count is required,
         because the training stops when the model converges (the gradient delta between iterations is very small)"""
 

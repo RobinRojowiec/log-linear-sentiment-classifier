@@ -8,9 +8,9 @@ import csv
 print("Starting evaluation")
 
 # define paths and initialize confusion matrix
-paths_validation = [["data/validation/pos", "pos"], ["data/validation/neg", "neg"]]
+paths_validation = [["data/validation/pos", "positive"], ["data/validation/neg", "negative"]]
 feature_sets_validation = generate_feature_sets(paths_validation, "feature_sets_validation")
-cf = ConfusionMatrix(["pos", "neg"])
+cf = ConfusionMatrix(["positive", "negative"])
 
 
 # load the training weights
