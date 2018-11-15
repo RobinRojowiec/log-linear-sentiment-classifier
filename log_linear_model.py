@@ -1,4 +1,3 @@
-import copy
 import math
 import pickle
 import random
@@ -16,7 +15,7 @@ class LogLinearModel:
 
     def auto_train(self, feature_sets_training, feature_sets_dev, learning_rate=0.1, regularization=0.001,
                    use_log_freq=False,
-                   gradient_descent_threshold=0.5):
+                   gradient_descent_threshold=0.1):
         """ trains the model automatically, meaning no iteration count is required,
         because the training stops when the model converges (the gradient delta between iterations is very small)"""
 
@@ -39,11 +38,10 @@ class LogLinearModel:
             print("Iteration " + str(iteration) + ", Average Gradient: " + str(avg_gradient) + ", Accuracy:" + str(
                 cf.accuracy_average() * 100.0) + "%")
 
-            # the weights of an iteration which got better results than before are copied
-            # they will be saved at after the last iteration and we don't wont to save
-            # every time better weights are found
+            # the weights of an iteration which got better results than before are saved
             if cf.accuracy_average() > acc_highest_value:
-                best_acc_weights = copy.deepcopy(self.weights)
+                with open('data/log_linear.model', "wb") as fb:
+                    pickle.dump(self, fb, -1)
                 acc_highest_value = cf.accuracy_average()
 
             # if gradient threshold is exceeded, the training stops
@@ -51,12 +49,6 @@ class LogLinearModel:
                 break;
             else:
                 last_gradient = avg_gradient
-
-        # set the current weights to the best weights found before saving
-        self.weights = best_acc_weights
-
-        with open('data/log_linear.model', "wb") as fb:
-            pickle.dump(self, fb, -1)
 
     def training_iteration(self, feature_sets_training, learning_rate, regulator=None, use_log_freq=False):
         """ Fits the model to the given feature set """

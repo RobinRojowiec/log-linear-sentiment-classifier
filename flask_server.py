@@ -20,7 +20,7 @@ app = Flask(__name__)
 
 # response class
 class SentimentResponse:
-    def __init__(self, predictions):
+    def __init__(self, predictions, weights, features):
         self.detailed_probabilities = {}
 
         for prediction in predictions:
@@ -31,15 +31,21 @@ class SentimentResponse:
         else:
             self.predicted_class = predictions[0][1]
 
+        self.word_weights = {}
+        for feature in features:
+            sum_weights: float = 0.0
+            sum_weights += float(weights[feature + "-positive"])
+            sum_weights -= float(weights[feature + "-negative"])
+            self.word_weights[feature] = sum_weights
+
 
 @app.route('/analyze')
 def analyze():
     text: "" = request.args.get('text')
     feature_set = generate_features_from_text(tokenizer, text)
-    print(feature_set.features)
     prediction = model.predict(feature_set, True)
 
-    response = SentimentResponse(prediction)
+    response = SentimentResponse(prediction, model.weights, feature_set.features)
 
     return jsonpickle.encode(response, unpicklable=False)
 

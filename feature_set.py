@@ -1,5 +1,6 @@
-import pickle
 import os
+import pickle
+
 from tokenizer import Tokenizer
 
 
@@ -44,8 +45,6 @@ def generate_feature_sets(paths, file_to_store):
                 feature_set.count_feature(token)
 
             feature_sets.append(feature_set)
-
-            print("Processed file: " + file_path)
 
     if file_to_store is not None:
         with open('data/'+file_to_store+'.lst', 'wb') as output:

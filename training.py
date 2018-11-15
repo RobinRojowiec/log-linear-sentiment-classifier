@@ -1,7 +1,7 @@
 #!/usr/bin/python3
+import pickle
 import sys
 
-from feature_set import generate_feature_sets
 from log_linear_model import LogLinearModel
 
 # Set parameters for training or take default values
@@ -21,11 +21,17 @@ else:
 paths_training = [["data/training/pos", "positive"], ["data/training/neg", "negative"]]
 paths_dev = [["data/dev/pos", "positive"], ["data/dev/neg", "negative"]]
 
-print("Starting training")
+print("Loading data...")
 
 # generate all features from training and test data
-feature_sets_training = generate_feature_sets(paths_training, "feature_sets_training")
-feature_sets_dev = generate_feature_sets(paths_dev, "feature_sets_dev")
+
+with open("data/feature_sets_training.lst", mode='rb') as training_file:
+    feature_sets_training: [] = pickle.load(training_file)
+
+with open("data/feature_sets_dev.lst", mode='rb') as dev_file:
+    feature_sets_dev: [] = pickle.load(dev_file)
+
+print("Starting training")
 
 # training the model (auto here means the trainings stops when a specific gradient threshold has been exceeded)
 model = LogLinearModel(["positive", "negative"])

@@ -1,22 +1,20 @@
 #!/usr/bin/python3
-import pickle
-from feature_set import generate_feature_sets
-from confusion_matrix import ConfusionMatrix
 import csv
+import pickle
 
+from confusion_matrix import ConfusionMatrix
 
 print("Starting evaluation")
 
-# define paths and initialize confusion matrix
-paths_validation = [["data/validation/pos", "positive"], ["data/validation/neg", "negative"]]
-feature_sets_validation = generate_feature_sets(paths_validation, "feature_sets_validation")
-cf = ConfusionMatrix(["positive", "negative"])
+# load data
+with open("data/feature_sets_validation.lst", mode='rb') as eval_file:
+    feature_sets_validation: [] = pickle.load(eval_file)
 
+cf = ConfusionMatrix(["positive", "negative"])
 
 # load the training weights
 with open('data/log_linear.model', "rb") as fb:
     model = pickle.load(fb)
-
 
 # evaluate against all sets and store results in csv file
 with open('data/validation_report.csv', 'w', newline='\n') as csv_file:
