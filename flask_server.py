@@ -39,9 +39,9 @@ class SentimentResponse:
 
         # for visualization, calculate the tendency of each token for class as the delta between both weights
         bags = tokenizer.create_bow_per_token(text)
-        self.word_weights = {}
+        self.word_weights = []
         for bag in bags:
-            self.word_weights[bag[0]] = self.calculate_tendency(bag, weights)
+            self.word_weights.append([bag[0], self.calculate_tendency(bag, weights)])
 
     def calculate_tendency(self, token_bag, weights):
         features = token_bag[1]
