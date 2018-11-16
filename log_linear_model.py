@@ -22,7 +22,6 @@ class LogLinearModel:
         # initialize variables (last_gradient is the latest gradient and at the first run,
         # we want to make sure the gradient delta is bog enough)
         last_gradient = sys.maxsize
-        best_acc_weights: dict = self.weights
         acc_highest_value: float = 0
         iteration: int = 1
 

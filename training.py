@@ -15,11 +15,7 @@ else:
 if len(params) > 1:
     regularization = float(params[1])
 else:
-    regularization = 0.001
-
-# define paths for training and dev data
-paths_training = [["data/training/pos", "positive"], ["data/training/neg", "negative"]]
-paths_dev = [["data/dev/pos", "positive"], ["data/dev/neg", "negative"]]
+    regularization = 0.01
 
 print("Loading data...")
 

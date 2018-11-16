@@ -24,6 +24,14 @@ class Tokenizer:
 
         return self.create_bag_of_words(tokens)
 
+    def create_bow_per_token(self, text):
+        tokens = text.split()
+        bow_per_token: [] = []
+        for token in tokens:
+            bow_per_token.append([token, self.create_bag_of_words([token])])
+
+        return bow_per_token
+
     def create_bag_of_words(self, tokens, lowercase=True, stem=True):
         """Reads the content of a file, tokenize it and collects all types except those filtered
         by the filter method"""
@@ -33,14 +41,8 @@ class Tokenizer:
             if filtered_token is not None:
                 bag_of_words.append(filtered_token)
 
-        bow_len = len(bag_of_words)
-        big_grams = set()
-        for i in range(1, bow_len, 2):
-            bi_gram = bag_of_words[i - 1] + "_" + bag_of_words[i]
-            #bag_of_words.append(bi_gram)
-            big_grams.add(bi_gram)
-
         return bag_of_words
+
 
     def load_stopwords(self, file):
         """loads all stopwords into a set"""
