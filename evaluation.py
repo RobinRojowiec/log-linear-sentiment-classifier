@@ -22,7 +22,7 @@ with open('data/validation_report.csv', 'w', newline='\n') as csv_file:
     csv_writer.writerow(["Actual Class", "Predicted Class"])
 
     for feature_set in feature_sets_validation:
-        prediction = model.predict(feature_set, False)
+        prediction = model.predict(feature_set, True)
         predicted_class = prediction[0][1]
 
         csv_writer.writerow([feature_set.class_name, predicted_class])

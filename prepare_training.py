@@ -24,13 +24,13 @@ all_feature_sets.extend(feature_sets_validation)
 # generate all features from training and test data
 tf_idf_pos, tf_idf_neg = normalize_and_store(all_feature_sets, "tf_idf_tr_pos.freq", "tf_idf_tr_neg.freq", None)
 
-normalize_and_store(feature_sets_training, None, None, "feature_sets_training.lst")
+normalize(feature_sets_training, tf_idf_pos, tf_idf_pos, "feature_sets_training.lst")
 print("Training data processed!")
 
-normalize_and_store(feature_sets_dev, None, None, "feature_sets_dev.lst")
+normalize(feature_sets_dev, tf_idf_pos, tf_idf_pos, "feature_sets_dev.lst")
 print("Dev data processed!")
 
-normalize_and_store(feature_sets_validation, None, None, "feature_sets_validation.lst")
+normalize(feature_sets_validation, tf_idf_pos, tf_idf_pos, "feature_sets_validation.lst")
 print("Validation data processed!")
 
 print("Finished!")

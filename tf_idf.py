@@ -1,7 +1,9 @@
-from collections import defaultdict
+import math
+import pickle
 from collections import Counter
+from collections import defaultdict
+
 from feature_set import FeatureSet
-import math, pickle
 
 
 class TFIDF:
@@ -11,21 +13,16 @@ class TFIDF:
         self.doc_count = 0
 
     def add_counts(self, feature_set: FeatureSet):
-        freq_dict = self.to_frequency_list(feature_set)
-
-        for token in freq_dict:
+        for token in feature_set.features:
             doc_count: int = self.doc_freq[token]
             doc_count += 1
             self.doc_freq[token] = doc_count
 
         self.doc_count += 1
 
-    def to_frequency_list(self, feature_set:FeatureSet):
-        return Counter(feature_set.features)
-
     def normalize(self, feature_set: FeatureSet):
         for feature in feature_set.features:
-            normalized: float = 1.0 #self.get_tf(feature, feature_set) * self.get_idf(feature)
+            normalized: float = 1.0  # self.get_tf(feature, feature_set) * self.get_idf(feature) disabled
             feature_set.features[feature] = normalized
 
     def get_idf(self, token):
@@ -35,7 +32,7 @@ class TFIDF:
         return math.log(self.doc_count/token_doc_freq)
 
     def get_tf(self, token, feature_set: FeatureSet):
-        freq_dict = self.to_frequency_list(feature_set)
+        freq_dict = Counter(feature_set.features)
         max_freq: float = float(freq_dict.most_common(1)[0][1])
         token_freq = freq_dict[token]
         return token_freq/max_freq

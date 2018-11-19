@@ -2,8 +2,11 @@
 # -*- coding: utf-8 -*-
 import re
 
+import nltk
+from nltk import word_tokenize
 from nltk.stem.porter import PorterStemmer
 
+nltk.download('punkt')
 
 class Tokenizer:
     def __init__(self, stop_word_file):
@@ -20,12 +23,12 @@ class Tokenizer:
 
     def create_bow_from_file(self, file_path):
         with open(file_path, encoding='utf-8', mode='r') as f:
-            tokens = f.read().split()
+            tokens = word_tokenize(f.read())
 
         return self.create_bag_of_words(tokens)
 
     def create_bow_per_token(self, text):
-        tokens = text.split()
+        tokens = word_tokenize(text)
         bow_per_token: [] = []
         for token in tokens:
             bow_per_token.append([token, self.create_bag_of_words([token])])
